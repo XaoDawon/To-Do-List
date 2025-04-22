@@ -1,52 +1,26 @@
-import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-import _tarefa from './types/_tarefa';
-import Tarefa from './components/Tarefa';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ToDoScreen from "./pages/ToDoScreen";
+import TesteScreen from "./pages/TesteScreen";
+import BuscaCepScreen from "./pages/BuscaCepScreen";
 
-export default function App() {
-  const [texto, setTexto] = useState<string>('');
-  const [tarefas, setTarefas] = useState<_tarefa[]>([]);
+const Stack = createNativeStackNavigator();
 
-  function adicionar(){
-    if(texto == ''){
-      alert('Insira um texto, bobo!');
-      return;
-    }
-    let tarefa: _tarefa = {
-      id: tarefas.length +1,
-      texto,
-    };
-
-    setTarefas([...tarefas, tarefa])
-  }
-
-  function mostrar(){
-    return tarefas.map(t => <Tarefa key={t.id} dados={t} handleDeletePress={remover}/>);
-  }
-
-  function remover(id:number){
-    let f = tarefas.filter(t => t.id != id);
-    setTarefas(f);
-  }
-
-  return (
-    <View style={styles.container}>
-      <TextInput style={styles.input} value={texto} onChangeText={setTexto}/> 
-      <Button title='Adicionar Tarefa' onPress={adicionar} color={'#acdae3'}/>
-      {mostrar()}
-    </View>
-  );
+export default function App(){
+  return <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="home"
+        component={ToDoScreen}
+      />
+      <Stack.Screen
+        name="teste"
+        component={TesteScreen}
+      />
+      <Stack.Screen
+        name="buscaCep"
+        component={BuscaCepScreen}
+      />
+    </Stack.Navigator>
+  </NavigationContainer>
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#7b93d3',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    borderWidth: 3,
-    borderColor: '#4169E1',
-  },
-});
