@@ -21,7 +21,7 @@ export default function App() {
   }
 
   function mostrar(){
-    return tarefas.map(t => <Tarefa key={t.id} dados={t}/>);
+    return tarefas.map(t => <Tarefa key={t.id} dados={t} handleDeletePress={remover}/>);
   }
 
   function remover(id:number){
